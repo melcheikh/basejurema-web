@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { TOURS_DATA, ADDONS_DATA, Tour } from "@/data/tours";
-import { Calendar, Users, Clock, Sparkles, Check, ArrowRight, ShieldCheck, MessageCircle } from "lucide-react";
+import { Calendar, Users, Clock, Sparkles, Check, ArrowRight, ShieldCheck, MessageCircle, Building2 } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export default function BookingWidget() {
@@ -14,10 +14,13 @@ export default function BookingWidget() {
   });
   const [timeSlot, setTimeSlot] = useState<string>(selectedTour.schedule[0]);
   const [passengers, setPassengers] = useState<number>(2);
+  const [corporateTier, setCorporateTier] = useState<string>("Até 10 colaboradores");
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [customerName, setCustomerName] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
+
+  const isCorporate = selectedTour.id === "corporativo";
 
   const toggleAddon = (addonId: string) => {
     if (selectedAddons.includes(addonId)) {
@@ -32,11 +35,18 @@ export default function BookingWidget() {
     return sum + (addon ? addon.price : 0);
   }, 0);
 
-  const basePrice = selectedTour.id === "corporativo" 
-    ? selectedTour.price 
-    : selectedTour.price * passengers;
+  // Corporate Tiers calculation
+  let basePrice = selectedTour.price * passengers;
+  if (isCorporate) {
+    if (corporateTier === "Até 10 colaboradores") basePrice = 600;
+    else if (corporateTier === "10 a 20 colaboradores") basePrice = 1100;
+    else if (corporateTier === "20 a 50 colaboradores") basePrice = 2400;
+    else basePrice = 4500; // 50+
+  }
 
-  const totalPrice = basePrice + addonsTotal * (selectedTour.id === "corporativo" ? 1 : passengers);
+  const totalPrice = isCorporate
+    ? basePrice + addonsTotal * 10
+    : basePrice + addonsTotal * passengers;
 
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,10 +67,10 @@ export default function BookingWidget() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          tourTitle: selectedTour.title,
+          tourTitle: selectedTour.title + (isCorporate ? ` (${corporateTier})` : ""),
           date,
           timeSlot,
-          passengers,
+          passengers: isCorporate ? corporateTier : passengers,
           selectedAddons: addonNames,
           totalPrice,
           customerName,
@@ -93,7 +103,7 @@ export default function BookingWidget() {
           </span>
         </h2>
         <p className="text-[#2E3827] text-base sm:text-lg font-semibold">
-          Escolha o passeio desejado, selecione o horário, calcule o valor instantaneamente e garanta sua vaga diretamente com a equipe da Base Jurema pelo WhatsApp.
+          Escolha o passeio ou pacote corporativo, selecione a data e garanta a vaga do seu grupo direto no WhatsApp.
         </p>
       </div>
 
@@ -139,7 +149,7 @@ export default function BookingWidget() {
             </div>
           </div>
 
-          {/* Step 2 */}
+          {/* Step 2: Date & Time */}
           <div className="glass-card-light rounded-2xl p-6 border-2 border-[#0D1309] bg-white grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-black text-[#0D1309] uppercase tracking-wider mb-2 flex items-center gap-2">
@@ -174,42 +184,77 @@ export default function BookingWidget() {
             </div>
           </div>
 
-          {/* Step 3 */}
+          {/* Step 3: Passengers OR Corporate Tier */}
           <div className="glass-card-light rounded-2xl p-6 border-2 border-[#0D1309] bg-white">
-            <div className="flex items-center justify-between mb-4">
-              <label className="text-sm font-black text-[#0D1309] uppercase tracking-wider flex items-center gap-2">
-                <Users className="w-4 h-4 text-[#0D1309]" />
-                <span>3. Quantidade de Pessoas:</span>
-              </label>
-              <span className="text-xs text-[#2E3827] font-bold">
-                {selectedTour.id === "corporativo" ? "Pacote Corporativo" : "Máx. 6 por canoa"}
-              </span>
-            </div>
+            {!isCorporate ? (
+              <>
+                <div className="flex items-center justify-between mb-4">
+                  <label className="text-sm font-black text-[#0D1309] uppercase tracking-wider flex items-center gap-2">
+                    <Users className="w-4 h-4 text-[#0D1309]" />
+                    <span>3. Quantidade de Pessoas:</span>
+                  </label>
+                  <span className="text-xs text-[#2E3827] font-bold">Máx. 6 por canoa OC6</span>
+                </div>
 
-            <div className="flex items-center gap-4">
-              <button
-                type="button"
-                disabled={passengers <= 1}
-                onClick={() => setPassengers(Math.max(1, passengers - 1))}
-                className="w-12 h-12 rounded-xl bg-[#F4F8EC] text-[#0D1309] font-black text-xl hover:bg-[#CFF726] disabled:opacity-30 border-2 border-[#0D1309] flex items-center justify-center"
-              >
-                -
-              </button>
-              <div className="flex-1 text-center py-3 bg-[#CFF726] rounded-xl border-2 border-[#0D1309]">
-                <span className="text-2xl font-black text-[#0D1309]">{passengers}</span>
-                <span className="text-xs text-[#0D1309] block font-bold">
-                  {passengers === 1 ? "Remador" : "Remadores"}
-                </span>
-              </div>
-              <button
-                type="button"
-                disabled={passengers >= 12}
-                onClick={() => setPassengers(passengers + 1)}
-                className="w-12 h-12 rounded-xl bg-[#F4F8EC] text-[#0D1309] font-black text-xl hover:bg-[#CFF726] disabled:opacity-30 border-2 border-[#0D1309] flex items-center justify-center"
-              >
-                +
-              </button>
-            </div>
+                <div className="flex items-center gap-4">
+                  <button
+                    type="button"
+                    disabled={passengers <= 1}
+                    onClick={() => setPassengers(Math.max(1, passengers - 1))}
+                    className="w-12 h-12 rounded-xl bg-[#F4F8EC] text-[#0D1309] font-black text-xl hover:bg-[#CFF726] disabled:opacity-30 border-2 border-[#0D1309] flex items-center justify-center"
+                  >
+                    -
+                  </button>
+                  <div className="flex-1 text-center py-3 bg-[#CFF726] rounded-xl border-2 border-[#0D1309]">
+                    <span className="text-2xl font-black text-[#0D1309]">{passengers}</span>
+                    <span className="text-xs text-[#0D1309] block font-bold">
+                      {passengers === 1 ? "Remador" : "Remadores"}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    disabled={passengers >= 12}
+                    onClick={() => setPassengers(passengers + 1)}
+                    className="w-12 h-12 rounded-xl bg-[#F4F8EC] text-[#0D1309] font-black text-xl hover:bg-[#CFF726] disabled:opacity-30 border-2 border-[#0D1309] flex items-center justify-center"
+                  >
+                    +
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-3">
+                  <label className="text-sm font-black text-[#0D1309] uppercase tracking-wider flex items-center gap-2">
+                    <Building2 className="w-4 h-4 text-[#0D1309]" />
+                    <span>Tamanho do Grupo Corporativo:</span>
+                  </label>
+                  <span className="text-xs text-[#0D1309] font-black bg-[#CFF726] px-2 py-0.5 rounded border border-[#0D1309]">
+                    Team Building
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    "Até 10 colaboradores",
+                    "10 a 20 colaboradores",
+                    "20 a 50 colaboradores",
+                    "Mais de 50 colaboradores"
+                  ].map((tier) => (
+                    <div
+                      key={tier}
+                      onClick={() => setCorporateTier(tier)}
+                      className={`cursor-pointer p-3 rounded-xl border-2 text-xs font-black transition-all text-center ${
+                        corporateTier === tier
+                          ? "bg-[#CFF726] border-[#0D1309] text-[#0D1309]"
+                          : "bg-[#F4F8EC] border-[#0D1309]/20 text-[#0D1309] hover:border-[#0D1309]"
+                      }`}
+                    >
+                      {tier}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           {/* Step 4 */}
@@ -257,10 +302,10 @@ export default function BookingWidget() {
           {/* Step 5 */}
           <div className="glass-card-light rounded-2xl p-6 border-2 border-[#0D1309] bg-white grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#0D1309] mb-1">Seu Nome (Opcional):</label>
+              <label className="block text-xs font-bold text-[#0D1309] mb-1">Seu Nome / Empresa (Opcional):</label>
               <input
                 type="text"
-                placeholder="Ex: Ana Silva"
+                placeholder="Ex: Empresa XYZ / Ana Silva"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 className="w-full bg-[#F4F8EC] border-2 border-[#0D1309] rounded-xl px-4 py-2.5 text-[#0D1309] text-sm font-bold focus:outline-none focus:bg-[#CFF726]/30"
@@ -270,7 +315,7 @@ export default function BookingWidget() {
               <label className="block text-xs font-bold text-[#0D1309] mb-1">Observações (Opcional):</label>
               <input
                 type="text"
-                placeholder="Ex: Aniversário, 1ª vez..."
+                placeholder="Ex: Aniversário, evento de equipe..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 className="w-full bg-[#F4F8EC] border-2 border-[#0D1309] rounded-xl px-4 py-2.5 text-[#0D1309] text-sm font-bold focus:outline-none focus:bg-[#CFF726]/30"
@@ -302,8 +347,8 @@ export default function BookingWidget() {
               </div>
 
               <div className="flex justify-between py-1 border-b border-[#0D1309]/20">
-                <span>Pessoas:</span>
-                <span>{passengers} remador(es)</span>
+                <span>Participantes / Grupo:</span>
+                <span>{isCorporate ? corporateTier : `${passengers} remador(es)`}</span>
               </div>
 
               <div className="flex justify-between py-1 border-b border-[#0D1309]/20">
@@ -314,7 +359,7 @@ export default function BookingWidget() {
               {selectedAddons.length > 0 && (
                 <div className="flex justify-between py-1 border-b border-[#0D1309]/20">
                   <span>Adicionais ({selectedAddons.length}):</span>
-                  <span>+ R$ {addonsTotal * (selectedTour.id === "corporativo" ? 1 : passengers)}</span>
+                  <span>+ R$ {addonsTotal * (isCorporate ? 10 : passengers)}</span>
                 </div>
               )}
             </div>

@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { TOURS_DATA } from "@/data/tours";
-import { Clock, Users, Check, Calendar, Sparkles } from "lucide-react";
+import { Clock, Users, Check, Calendar, Sparkles, Anchor } from "lucide-react";
 
 export default function ToursShowcase() {
-  const [filter, setFilter] = useState<"todos" | "populares" | "iniciantes" | "grupos">("todos");
+  const [filter, setFilter] = useState<"todos" | "populares" | "iniciantes" | "noturno" | "grupos">("todos");
 
   const filteredTours = TOURS_DATA.filter((tour) => {
     if (filter === "populares") return tour.popular;
     if (filter === "iniciantes") return tour.difficulty === "Fácil / Para Todos";
+    if (filter === "noturno") return tour.id === "lua-cheia";
     if (filter === "grupos") return tour.id === "corporativo" || tour.id === "passeio-ilhas";
     return true;
   });
@@ -33,7 +34,7 @@ export default function ToursShowcase() {
           </span>
         </h2>
         <p className="text-[#2E3827] text-base sm:text-lg font-semibold">
-          Escolha a modalidade perfeita para o seu momento — desde remadas relaxantes ao amanhecer até expedições ecológicas e eventos corporativos.
+          Remadas em Canoa Coletiva (OC6) e Técnica Individual (V1). Desde o nascer do sol até a mágica Lua Cheia e eventos corporativos.
         </p>
 
         {/* Filter Tabs */}
@@ -42,6 +43,7 @@ export default function ToursShowcase() {
             { id: "todos", label: "Todos os Passeios" },
             { id: "populares", label: "🔥 Mais Populares" },
             { id: "iniciantes", label: "🔰 Para Iniciantes" },
+            { id: "noturno", label: "🌕 Lua Cheia" },
             { id: "grupos", label: "👥 Grupos & Empresas" }
           ].map((tab) => (
             <button
@@ -76,11 +78,16 @@ export default function ToursShowcase() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0D1309]/80 via-transparent to-black/20" />
 
-                {tour.badge && (
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#CFF726] text-[#0D1309] border-2 border-[#0D1309] font-black text-xs shadow-md">
-                    {tour.badge}
+                <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start">
+                  {tour.badge && (
+                    <span className="px-3 py-1 rounded-full bg-[#CFF726] text-[#0D1309] border-2 border-[#0D1309] font-black text-xs shadow-md">
+                      {tour.badge}
+                    </span>
+                  )}
+                  <span className="px-2.5 py-0.5 rounded-md bg-[#0D1309] text-[#CFF726] font-bold text-[10px] uppercase tracking-wider">
+                    {tour.modality}
                   </span>
-                )}
+                </div>
 
                 <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
                   <div>

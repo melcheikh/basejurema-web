@@ -8,6 +8,7 @@ export interface Tour {
   schedule: string[];
   capacity: string;
   difficulty: "Fácil / Para Todos" | "Moderado" | "Aventura";
+  modality: "OC6 (Canoa Coletiva)" | "V1 (Canoa Individual)" | "V2 (Canoa Dupla)";
   popular?: boolean;
   badge?: string;
   image: string;
@@ -27,6 +28,7 @@ export const TOURS_DATA: Tour[] = [
     schedule: ["05:30 (Amanhecer)", "06:00 (Primeiros Raios)"],
     capacity: "Até 6 remadores por canoa",
     difficulty: "Fácil / Para Todos",
+    modality: "OC6 (Canoa Coletiva)",
     popular: true,
     badge: "O mais vendido 🌅",
     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
@@ -37,7 +39,7 @@ export const TOURS_DATA: Tour[] = [
       "Instrutor credenciado guiando todo o percurso",
       "Equipamentos de segurança completos (Colete homologado)"
     ],
-    included: ["Canoa Havaiana tradicional", "Remo e Colete Salva-vidas", "Instrução antes de entrar na água", "Fotos cortesia do grupo"]
+    included: ["Canoa Havaiana tradicional (OC6)", "Remo e Colete Salva-vidas", "Instrução antes de entrar na água", "Fotos cortesia do grupo"]
   },
   {
     id: "por-do-sol",
@@ -49,6 +51,7 @@ export const TOURS_DATA: Tour[] = [
     schedule: ["16:30", "17:00 (Entardecer)"],
     capacity: "Até 6 remadores por canoa",
     difficulty: "Fácil / Para Todos",
+    modality: "OC6 (Canoa Coletiva)",
     popular: true,
     badge: "Visual Incrível 🌆",
     image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80",
@@ -62,6 +65,29 @@ export const TOURS_DATA: Tour[] = [
     included: ["Equipamento completo", "Guia capitão de canoa", "Instruções de navegação", "Fotos em alta resolução"]
   },
   {
+    id: "lua-cheia",
+    title: "Remada da Lua Cheia & Noturna",
+    subtitle: "Experiência mística sob o luar e brilho das estrelas no mar de Vitória",
+    price: 90,
+    unit: "por pessoa",
+    duration: "1h 30min",
+    schedule: ["19:00 (Noite de Lua Cheia)", "19:30"],
+    capacity: "Até 6 remadores por canoa",
+    difficulty: "Fácil / Para Todos",
+    modality: "OC6 (Canoa Coletiva)",
+    popular: true,
+    badge: "Especial Noturno 🌕",
+    image: "https://images.unsplash.com/photo-1532767153582-b1a0e5145009?auto=format&fit=crop&w=1200&q=80",
+    description: "Navegar à noite sob o reflexo prateado da Lua Cheia nas águas calmas da Curva da Jurema é uma vivência sensorial única. Silêncio do oceano, brisa noturna e luzes da orla de Vitória ao fundo.",
+    highlights: [
+      "Remada noturna especial em datas de Lua Cheia",
+      "Navegação com sinalização luminosa de segurança",
+      "Sinta a calmaria e a energia relaxante do oceano à noite",
+      "Guia capixaba experiente em navegação noturna"
+    ],
+    included: ["Equipamento iluminado de segurança", "Instruções específicas para remada noturna", "Fotos e vídeos noturnos", "Chá aquecido pós-remada"]
+  },
+  {
     id: "remada-experimental",
     title: "Aula Experimental de Canoa Havaiana",
     subtitle: "Aprenda a técnica tradicional da Va'a e apaixone-se pelo esporte",
@@ -71,6 +97,7 @@ export const TOURS_DATA: Tour[] = [
     schedule: ["06:30", "07:30", "17:30"],
     capacity: "Até 6 alunos",
     difficulty: "Fácil / Para Todos",
+    modality: "OC6 (Canoa Coletiva)",
     badge: "Ideal para iniciantes 🚣‍♀️",
     image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80",
     description: "Nunca remou antes? Sem problemas! Nossa aula experimental ensina postura, pegada no remo, trabalho em equipe, ritmo e segurança na água. A introdução perfeita ao estilo de vida da Canoa Havaiana.",
@@ -92,6 +119,7 @@ export const TOURS_DATA: Tour[] = [
     schedule: ["07:00 (Manhã de Sábado/Domingo)"],
     capacity: "Até 12 pessoas (2 canoas)",
     difficulty: "Moderado",
+    modality: "OC6 (Canoa Coletiva)",
     badge: "Eco-Aventura 🏝️",
     image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
     description: "Uma verdadeira expedição marítima pelas ilhas mais belas de Vitória. Remaremos contornando a Ilha do Boi e Ilha do Frade, com parada técnica para mergulho livre e contemplação das águas cristalinas.",
@@ -106,19 +134,20 @@ export const TOURS_DATA: Tour[] = [
   {
     id: "corporativo",
     title: "Remada Corporativa & Team Building",
-    subtitle: "Sincronia, liderança e união para sua equipe no mar de Vitória",
+    subtitle: "Menos reuniões de escritório, mais conexão real e sincronia no mar",
     price: 600,
     unit: "pacote base (até 6 pess.)",
     duration: "2h 00min",
     schedule: ["Horário personalizado sob agendamento"],
-    capacity: "Grupos de 6 a 30 colaboradores",
+    capacity: "Grupos de 6 a 50+ colaboradores",
     difficulty: "Fácil / Para Todos",
+    modality: "OC6 (Canoa Coletiva)",
     badge: "Empresas & Eventos 💼",
     image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
-    description: "A Canoa Havaiana é o símbolo máximo de trabalho em equipe: se todos não remarem no mesmo ritmo, a canoa não avança com velocidade. Uma vivência transformadora para fortalecer laços corporativos, comunicação e bem-estar.",
+    description: "A Canoa Havaiana é o símbolo máximo de trabalho em equipe: se todos não remarem no mesmo ritmo, a canoa não avança. Uma vivência transformadora para fortalecer laços corporativos, comunicação e bem-estar dos colaboradores.",
     highlights: [
       "Dinâmica de integração de equipe e liderança guiada",
-      "Desafio amigável de sincronia e regata de grupos",
+      "Desafio amigável de sincronia e regata corporativa",
       "Espaço físico da base reservado para a equipe",
       "Option de Coffee-Break completo à beira-mar"
     ],
@@ -151,7 +180,7 @@ export const REVIEWS_DATA = [
   {
     id: 1,
     author: "Renata Vasconcellos",
-    role: "Remadora Frequente & Advogada",
+    role: "Remadora de OC6 & Advogada",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
     rating: 5,
     comment: "Experiência surreal! Ver o nascer do sol do meio do mar em Vitória muda o dia de qualquer um. A equipe da Base Jurema é acolhedora, atenciosa e passa muita segurança!",
@@ -160,19 +189,19 @@ export const REVIEWS_DATA = [
   {
     id: 2,
     author: "Felipe Drummond",
-    role: "Empresário - Tech Vitória",
+    role: "Empresário & Aluno V1",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
     rating: 5,
-    comment: "Fizemos o evento de fim de ano da nossa empresa com a Base Jurema. Foi espetacular! Todos os colaboradores amaram a dinâmica de trabalho em equipe na canoa havaiana.",
-    tour: "Remada Corporativa"
+    comment: "Comecei no OC6 coletivo e evoluí para as aulas individuais de V1. A didática dos instrutores da Base Jurema na Curva da Jurema é fora de série!",
+    tour: "Escolinha / Treino V1"
   },
   {
     id: 3,
-    author: "Camila Ribeiro",
-    role: "Designer & Praticante Wellhub",
+    author: "Beatriz Mello",
+    role: "Praticante Wellhub & Designer",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
     rating: 5,
-    comment: "Uso meu Wellhub (Gympass) semanalmente na Base Jurema. As aulas são dinâmicas, os instrutores corrigem nossa postura e a vibe da galera na Curva da Jurema é imbatível!",
-    tour: "Escolinha / Planos"
+    comment: "Faço o check-in do meu Wellhub semanalmente na Base Jurema. A remada noturna de Lua Cheia foi a experiência mais bonita que já vivi em Vitória!",
+    tour: "Remada da Lua Cheia"
   }
 ];

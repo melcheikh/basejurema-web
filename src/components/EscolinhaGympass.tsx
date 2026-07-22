@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, CheckCircle2, HeartPulse, ChevronRight } from "lucide-react";
+import { Award, CheckCircle2, HeartPulse, ChevronRight, Anchor, UserCheck } from "lucide-react";
 
 export default function EscolinhaGympass() {
   const scrollToBooking = () => {
@@ -9,9 +9,52 @@ export default function EscolinhaGympass() {
   };
 
   return (
-    <section id="escolinha" className="py-20 px-4 relative z-10 max-w-7xl mx-auto">
+    <section id="escolinha" className="py-20 px-4 relative z-10 max-w-7xl mx-auto space-y-12">
+      {/* Top Banner: Modalities OC6 vs V1 */}
+      <div className="glass-card-light rounded-3xl p-6 sm:p-8 border-2 border-[#0D1309] bg-white">
+        <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
+          <span className="text-xs font-black uppercase tracking-wider bg-[#CFF726] px-3 py-1 rounded-full border border-[#0D1309]">
+            Modalidades da Escolinha
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-black text-[#0D1309]">
+            Treino Coletivo (OC6) ou Técnica Individual (V1)
+          </h2>
+          <p className="text-[#2E3827] text-xs sm:text-sm font-semibold">
+            Na Base Jurema você aprende desde os fundamentos do trabalho em equipe até o controle avançado em canoa individual.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#F4F8EC] p-6 rounded-2xl border-2 border-[#0D1309] space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-black bg-[#0D1309] text-[#CFF726] px-2.5 py-1 rounded-md">
+                OC6 • Canoa Coletiva (6 Pessoas)
+              </span>
+              <Anchor className="w-5 h-5 text-[#0D1309]" />
+            </div>
+            <h4 className="text-lg font-black text-[#0D1309]">Iniciação & Treino em Equipe</h4>
+            <p className="text-xs text-[#2E3827] font-semibold leading-relaxed">
+              Ideal para iniciantes e intermediários. Aprenda a ler as marés, sincronia de remada, postura correta, segurança marítima e espírito de equipe dentro da canoa tradicional de 6 lugares.
+            </p>
+          </div>
+
+          <div className="bg-[#CFF726] p-6 rounded-2xl border-2 border-[#0D1309] space-y-3 shadow-md">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-black bg-[#0D1309] text-white px-2.5 py-1 rounded-md">
+                V1 • Canoa Individual
+              </span>
+              <UserCheck className="w-5 h-5 text-[#0D1309]" />
+            </div>
+            <h4 className="text-lg font-black text-[#0D1309]">Aperfeiçoamento Técnico & Autonomia</h4>
+            <p className="text-xs text-[#0D1309] font-bold leading-relaxed">
+              Para quem deseja evoluir a técnica no V1 sem leme. Foco em equilíbrio, controle de direção, potência de puxada e autonomia total no mar da Curva da Jurema.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        {/* Escolinha */}
+        {/* Escolinha Plans */}
         <div className="lg:col-span-7 glass-card-light rounded-3xl p-6 sm:p-10 border-2 border-[#0D1309] flex flex-col justify-between relative overflow-hidden bg-white">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#CFF726] text-[#0D1309] text-xs font-black uppercase tracking-wider border-2 border-[#0D1309]">
@@ -38,7 +81,7 @@ export default function EscolinhaGympass() {
                 <ul className="space-y-2 mt-4 text-xs font-bold text-[#0D1309]">
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-[#0D1309] shrink-0" />
-                    <span>2 treinos semanais fixos</span>
+                    <span>2 treinos semanais fixos (OC6/V1)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-[#0D1309] shrink-0" />
@@ -46,7 +89,7 @@ export default function EscolinhaGympass() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-[#0D1309] shrink-0" />
-                    <span>Guarda de remos e coletes</span>
+                    <span>Guarda de remos e coletes na base</span>
                   </li>
                 </ul>
               </div>
