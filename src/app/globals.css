@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-lime-fluor: #CFF726;
+    --color-lime-bright: #B5E617;
+    --color-lime-glow: rgba(207, 247, 38, 0.4);
+    --color-gold-accent: #A19968;
+    --color-olive-accent: #858358;
+    
+    --color-bg-light: #F4F8EC;
+    --color-surface-white: #FFFFFF;
+    --color-card-light: #FFFFFF;
+    --color-text-dark: #0D1309;
+    --color-text-muted: #2E3827;
+  }
+
+  body {
+    background-color: #F4F8EC;
+    color: #0D1309;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Vibrant Light & Lime Flúor Theme Classes */
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid rgba(207, 247, 38, 0.7);
+  box-shadow: 0 10px 30px -10px rgba(207, 247, 38, 0.3);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  background: #FFFFFF;
+  border-color: #CFF726;
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -10px rgba(207, 247, 38, 0.5);
+}
+
+.glass-pill-light {
+  background: rgba(207, 247, 38, 0.25);
+  backdrop-filter: blur(8px);
+  border: 2px solid #0D1309;
+  color: #0D1309;
+}
+
+.lime-gradient-text {
+  background: linear-gradient(135deg, #A8E000 0%, #82B800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lime-fluor-btn {
+  background: linear-gradient(135deg, #CFF726 0%, #B5E617 100%);
+  color: #0D1309;
+  font-weight: 900;
+  border: 2px solid #0D1309;
+}
+
+.lime-fluor-btn:hover {
+  background: linear-gradient(135deg, #DBFF3D 0%, #CFF726 100%);
+  box-shadow: 0 0 25px rgba(207, 247, 38, 0.6);
+  transform: scale(1.03);
+}
+
+.glow-lime-lg {
+  box-shadow: 0 0 30px rgba(207, 247, 38, 0.5);
+}
+
+/* Keyframe animations */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+
+.animate-float {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F8EC;
+}
+::-webkit-scrollbar-thumb {
+  background: #CFF726;
+  border: 2px solid #0D1309;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B5E617;
+}
